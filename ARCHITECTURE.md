@@ -1,0 +1,77 @@
+# Human Sound: Architecture
+
+Human Sound checks whether an audio clip is AI-generated. You upload a clip, the backend turns it into a spectrogram, our trained model looks at it, and the app shows two things: AI or not, and how confident the model is.
+
+## Stack
+
+- Frontend: Vite, React, TypeScript
+- Backend: FastAPI
+- Audio processing: 
+- Model: the one we trained (weights loaded once when the server starts)
+
+## How it works
+
+```
+browser --> audio --> FastAPI --> spectrogram --> model --> { is_ai, confidence }
+```
+
+1. User picks an audio file in the browser.
+2. Frontend sends it to the backend.
+3. Backend decodes it, resamples it, and turns it into a spectrogram image.
+4. The model scores the image.
+5. Backend returns the verdict and confidence, and the UI shows them.
+
+## Endpoints
+
+**POST /convert**
+
+Takes an audio file (multipart, field name `file`) and returns the spectrogram as a PNG. This is mostly so we can show users the image and debug what the model is actually seeing.
+
+**POST /identify**
+
+Takes an audio file (same format), runs the whole pipeline, and returns:
+
+```json
+{ "is_ai": true, "confidence": 0.93 }
+```
+
+`confidence` is how sure the model is about its own answer, so `is_ai: false` with `0.93` means 93% sure it's human. It is not the probability of AI.
+
+Errors come back as `{ "detail": "message" }` with a 400 for bad or unreadable audio, 413 for files that are too big, and 415 for unsupported formats.
+
+## Backend
+
+The spectrogram settings (sample rate, window size, hop length, mel bins, image size, normalization) have to match training exactly. If they drift, the model will give bad answers without throwing any errors. Keep them in one config, and ideally share that code with the training scripts.
+
+A few other things:
+
+- Load the model once at startup, not per request.
+- Don't save uploads. Process them and delete any temp files right away.
+- Set a max file size and a max duration. Longer clips can get chunked later.
+- Spectrogram generation and inference are slow, so use plain `def` route handlers and let FastAPI run them in a threadpool.
+
+## Frontend
+
+The user flow is simple: upload, loading state, then the result card with the verdict and a confidence percentage. If something fails, show the error and let them try again.
+
+In dev, proxy the API through Vite so we don't fight CORS. The API URL lives in `VITE_API_URL`.
+
+## Testing
+
+- Backend: try a known human clip and a known AI clip against both endpoints, plus some bad inputs (empty file, wrong format, too long).
+- One check that the backend's spectrogram for a clip matches what the training pipeline produces for the same clip.
+- Frontend: basic tests for the uploader and result card with the API mocked.
+
+## Before going public
+
+- Add rate limiting.
+- Lock CORS down to our real domain.
+- Say clearly in the UI that audio isn't stored.
+
+## Still to decide
+
+- Which formats to support (wav, mp3, m4a?)
+- Max clip length, and whether to chunk longer audio
+- Whether `/convert` returns a raw PNG or base64 JSON
+- How to show results near 50/50 (a "not sure" state?)
+- Upload only, or in-browser recording too
