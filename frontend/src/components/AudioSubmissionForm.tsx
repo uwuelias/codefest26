@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent } from 'react';
 
-const ALLOWED_FORMATS = ['wav', 'mp3', 'm4a'];
+const ALLOWED_FORMATS = ['wav', 'm4a', 'mp3'];
 
 interface Props {
   onSubmit: (file: File) => void;
@@ -49,6 +49,7 @@ export default function AudioSubmissionForm({ onSubmit, loading = false, error =
       <input
         id="audio-input"
         type="file"
+        accept=".wav,.m4a,.mp3"
         onChange={onPick}
         disabled={loading}
         className="text-sm text-(--color-text-secondary) file:mr-3 file:rounded-md file:border file:border-(--border) file:bg-transparent file:px-3 file:py-1.5 file:text-sm file:text-(--color-text) hover:file:bg-neutral-100"

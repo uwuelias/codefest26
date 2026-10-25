@@ -2,11 +2,15 @@ import AudioSubmissionForm from './components/AudioSubmissionForm';
 import { useState } from 'react';
 
 interface IdentifyResult {
-  is_ai: boolean;
+  verdict: 'real' | 'fake' | 'inconclusive';
   confidence: number;
+  p_fake: number;
 }
 
-const API_URL = `${import.meta.env.VITE_API_URL}/convert`;
+const configuredApiUrl = import.meta.env.VITE_API_URL;
+const API_URL = /^https?:\/\//.test(configuredApiUrl)
+  ? configuredApiUrl
+  : `http://${configuredApiUrl}`;
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +26,7 @@ function App() {
       const body = new FormData();
       body.append('file', file);
 
-      const res = await fetch(`${API_URL}/identify`, { method: 'POST', body });
+      const res = await fetch(`${API_URL}/api/predict`, { method: 'POST', body });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -48,9 +52,11 @@ function App() {
         {result && (
           <div role="status" className="text-(--color-text)">
             <p className="text-xl font-semibold">
-              {result.is_ai ? 'Likely AI-generated' : 'Likely human'}
+              {result.verdict === 'fake' && 'Likely AI-generated'}
+              {result.verdict === 'real' && 'Likely human'}
+              {result.verdict === 'inconclusive' && 'Not sure'}
             </p>
-            <p className="text-(--color-text-muted)">
+            <p className="text-(--color-text-muted) text-center">
               {Math.round(result.confidence * 100)}% confident
             </p>
           </div>

@@ -1,21 +1,17 @@
-import pathlib
-import tempfile
-import joblib
-import numpy as np
-import torch.nn as nn
-from extract.py import get_embedding 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routers import predict
 
-classifier = nn.Linear(768,1)
+app = FastAPI()
 
-classifier.load_state_dict(torch.load("weights/classifier.pt"))
-classifier.eval()
-scaler = joblib.load("weights/scaler.joblib")
+CORS_ORIGINS = ["http://localhost:5173"]
 
-def predict(path):
-    embedding = get_embedding(path)
-    x = scaler.transform(embedding.reshape(1,-1))
-    x = torch.from_numpy(x.astype(np.float32))
-    with torch.no_grad():
-        logit = classifier(x)
-    return torch.sigmoid(logit).item()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+app.include_router(predict.router)
