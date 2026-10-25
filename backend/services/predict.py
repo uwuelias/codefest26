@@ -1,11 +1,11 @@
-import sys
 from pathlib import Path
 import joblib
 import numpy as np
 import torch
-import torch.nn as nn
-from backend.services.extract import get_embedding
-from routers import extract, predict
+from routers import predict
+from torch import nn
+
+from services.extract import get_embedding
 
 WEIGHTS = Path(__file__).parent / "weights"
 UNSURE = (0.4,0.6) #inconclusivity range
@@ -30,7 +30,7 @@ def analyze(path):
     p_fake = predict(path)
     if UNSURE[0] <= p_fake <= UNSURE[1]:
         verdict = "inconclusive"
-    else: 
+    else:
         verdict = "fake" if p_fake > 0.5 else "real"
     return {
         "verdict": verdict,

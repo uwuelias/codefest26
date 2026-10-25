@@ -18,4 +18,3 @@ def get_embedding(audio_path):
         outputs = model(**inputs, output_hidden_states=True)
     layers = torch.stack([outputs.hidden_states[i].mean(dim=1).squeeze(0) for i in LAYERS])
     return layers.mean(dim=0).numpy()
-

@@ -1,13 +1,13 @@
-import copy 
-from pathlib import Path 
+import copy
 import random
-import numpy as np 
-import torch 
-import joblib   
+from pathlib import Path
+
+import joblib
+import numpy as np
+import torch
+from sklearn.preprocessing import StandardScaler
 from torch import nn
 from torch.utils.data import DataLoader, TensorDataset
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, balanced_accuracy_score
 
 CACHE = Path("cache")
 WEIGHTS = Path("weights")

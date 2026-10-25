@@ -14,4 +14,4 @@ async def get_embedding(file: UploadFile = File()):
         embedding = await get_embedding(file)
         return embedding
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Audio processing failed: {str(e)}.")
+        raise HTTPException(status_code=500, detail=f"Audio processing failed: {e!s}.")

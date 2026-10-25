@@ -36,7 +36,6 @@ Takes an audio file (same format), runs the whole pipeline, and returns:
 ```
 
 `confidence` is how sure the model is about its own answer, so `is_ai: false` with `0.93` means 93% sure it's human. It is not the probability of AI.
-
 Errors come back as `{ "detail": "message" }` with a 400 for bad or unreadable audio, 413 for files that are too big, and 415 for unsupported formats.
 
 ## Backend
@@ -52,7 +51,7 @@ A few other things:
 
 ## Frontend
 
-The user flow is simple: upload, loading state, then the result card with the verdict and a confidence percentage. If something fails, show the error and let them try again.
+The user flow is simple: upload, loading state, then the result card with a verdict and a confidence percentage. If something fails, show the error and let them try again.
 
 In dev, proxy the API through Vite so we don't fight CORS. The API URL lives in `VITE_API_URL`.
 
