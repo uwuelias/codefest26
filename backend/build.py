@@ -3,7 +3,6 @@ import time
 from pathlib import Path
 
 import numpy as np
-
 from services.extract import get_embedding
 
 DATA = Path("data/for-2seconds")

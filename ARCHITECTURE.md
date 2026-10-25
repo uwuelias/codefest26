@@ -22,17 +22,12 @@ browser --> audio --> FastAPI --> spectrogram --> model --> { is_ai, confidence 
 5. Backend returns the verdict and confidence, and the UI shows them.
 
 ## Endpoints
-
-**POST /convert**
-
-Takes an audio file (multipart, field name `file`) and returns the spectrogram as a PNG. This is mostly so we can show users the image and debug what the model is actually seeing.
-
-**POST /identify**
+**POST /predict**
 
 Takes an audio file (same format), runs the whole pipeline, and returns:
 
 ```json
-{ "is_ai": true, "confidence": 0.93 }
+{ "verdict": "Ai-Generated", "confidence": 0.93, "p_score": 0.3 }
 ```
 
 `confidence` is how sure the model is about its own answer, so `is_ai: false` with `0.93` means 93% sure it's human. It is not the probability of AI.

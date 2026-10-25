@@ -1,8 +1,8 @@
 import shutil
 import tempfile
 from pathlib import Path
-from fastapi import APIRouter, File, HTTPException, UploadFile
 
+from fastapi import APIRouter, File, HTTPException, UploadFile
 from services.predict import analyze
 
 router = APIRouter(prefix="/api/predict")

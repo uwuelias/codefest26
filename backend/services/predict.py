@@ -1,10 +1,10 @@
 from pathlib import Path
+
 import joblib
 import numpy as np
 import torch
-from torch import nn
-
 from services.extract import get_embedding
+from torch import nn
 
 WEIGHTS = Path(__file__).parent.parent / "weights"
 UNSURE = (0.4,0.6) #inconclusivity range

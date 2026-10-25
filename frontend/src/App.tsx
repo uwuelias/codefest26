@@ -7,7 +7,7 @@ interface IdentifyResult {
   p_fake: number;
 }
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/predict/`;
+const API_URL = `${import.meta.env.VITE_API_URL}`;
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ function App() {
       const body = new FormData();
       body.append('file', file);
 
-      const res = await fetch(`${API_URL}/identify`, { method: 'POST', body });
+      const res = await fetch(`${API_URL}/api/predict/`, { method: 'POST', body });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
