@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from extract import get_embedding
+from backend.services.extract import get_embedding
 
 DATA = Path("data/for-2seconds")
 CACHE = Path("cache")
