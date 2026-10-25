@@ -2,6 +2,7 @@ import torch
 import librosa
 from transformers import Wav2Vec2Model, Wav2Vec2FeatureExtractor
 
+#layers in wav2vec2 that we found to be optimal for accuracy out of the 12
 LAYERS = [4,5,6]
 
 #load wav2vec2 pretrained no labels
