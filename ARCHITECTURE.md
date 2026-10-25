@@ -6,7 +6,7 @@ Human Sound checks whether an audio clip is AI-generated. Users upload an audio 
 
 - Frontend: Vite, React, TypeScript
 - Backend: FastAPI
-- Audio processing: 
+- Audio processing: PyAV decodes M4A recordings; librosa loads WAV and MP3 audio.
 - Model: the one we trained (weights loaded once when the server starts)
 
 ## How it works

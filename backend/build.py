@@ -15,7 +15,13 @@ ALLOWED_FORMATS = ["*.wav", "*.m4a", "*.mp3"]
 def list_files(section):
     items = []
     for name, label in LABELS.items():
-        files = sorted((DATA / section / name).glob(ALLOWED_FORMATS))
+        directory = DATA / section / name
+
+        files = sorted(
+            f 
+            for pattern in ALLOWED_FORMATS
+            for f in directory.glob(pattern)
+        )
         limit = (MAX or {}).get(section)
         if limit and len(files) > limit:
             files = random.Random(0).sample(files, limit)  
