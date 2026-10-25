@@ -9,12 +9,13 @@ DATA = Path("data/for-2seconds")
 CACHE = Path("cache")
 LABELS = {"real": 0, "fake": 1}      
 MAX = {"training": 500, "validation": 100, "testing": 100}
+ALLOWED_FORMATS = ["*.wav", "*.m4a", "*.mp3"]
 
 #builds list of file,label pairs
 def list_files(section):
     items = []
     for name, label in LABELS.items():
-        files = sorted((DATA / section / name).glob("*.wav"))
+        files = sorted((DATA / section / name).glob(ALLOWED_FORMATS))
         limit = (MAX or {}).get(section)
         if limit and len(files) > limit:
             files = random.Random(0).sample(files, limit)  
