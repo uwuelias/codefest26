@@ -1,6 +1,6 @@
 # Human Sound: Architecture
 
-Human Sound checks whether an audio clip is AI-generated. You upload a clip, the backend turns it into a spectrogram, our trained model looks at it, and the app shows two things: AI or not, and how confident the model is.
+Human Sound checks whether an audio clip is AI-generated. Users upload an audio clip, and the backend uses Meta’s pretrained Wav2Vec 2.0 model to convert the audio into numerical representations. The trained model analyzes the uploaded clip, and the app displays two results: whether the audio is AI-generated and how confident the model is in its prediction.
 
 ## Stack
 

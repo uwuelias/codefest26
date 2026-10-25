@@ -5,8 +5,7 @@ import numpy as np
 import torch.nn as nn
 from extract.py import get_embedding 
 
-classifier = nn.Sequential(
-    nn.Linear(768,256), nn.ReaLU(), nn.Dropout(0.3), nn.Linear(256,1),)
+classifier = nn.Linear(768,1)
 
 classifier.load_state_dict(torch.load("weights/classifier.pt"))
 classifier.eval()

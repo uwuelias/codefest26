@@ -14,7 +14,6 @@ export default function AudioSubmissionForm({ onSubmit, loading = false, error =
 
   const onPick = (e: ChangeEvent<HTMLInputElement>) => {
     const picked = e.target.files?.[0];
-    e.target.value = '';
     if (!picked) return;
 
     const ext = picked.name.split('.').pop()?.toLowerCase().trim() ?? '';
@@ -25,7 +24,7 @@ export default function AudioSubmissionForm({ onSubmit, loading = false, error =
       return;
     }
 
-    if (picked.size == 0) {
+    if (picked.size === 0) {
       setFile(null);
       setFileError('This file is empty.');
       return;
@@ -54,8 +53,6 @@ export default function AudioSubmissionForm({ onSubmit, loading = false, error =
         disabled={loading}
         className="text-sm text-(--color-text-secondary) file:mr-3 file:rounded-md file:border file:border-(--border) file:bg-transparent file:px-3 file:py-1.5 file:text-sm file:text-(--color-text) hover:file:bg-neutral-100"
       />
-
-      {file && <p className="text-sm text-(--color-text-secondary)">Selected: {file.name}</p>}
 
       <button
         type="button"

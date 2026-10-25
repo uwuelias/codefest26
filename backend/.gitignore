@@ -1,0 +1,9 @@
+/data/
+/cache/
+/__pycache__/
+.venv/
+env/
+venv/
+weights/
+.vscode/
+/requirements.txt
