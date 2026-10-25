@@ -27,10 +27,10 @@ browser --> audio --> FastAPI --> spectrogram --> model --> { is_ai, confidence 
 Takes an audio file (same format), runs the whole pipeline, and returns:
 
 ```json
-{ "verdict": "Ai-Generated", "confidence": 0.93, "p_score": 0.3 }
+{ "verdict": "real", "confidence": 0.93, "p_score": 0.3 }
 ```
 
-`confidence` is how sure the model is about its own answer, so `is_ai: false` with `0.93` means 93% sure it's human. It is not the probability of AI.
+`confidence` is how sure the model is about its own answer, so `verdict: real` with `0.93` means 93% sure it's human. It is not the probability of AI.
 Errors come back as `{ "detail": "message" }` with a 400 for bad or unreadable audio, 413 for files that are too big, and 415 for unsupported formats.
 
 ## Backend

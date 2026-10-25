@@ -7,7 +7,10 @@ interface IdentifyResult {
   p_fake: number;
 }
 
-const API_URL = `${import.meta.env.VITE_API_URL}`;
+const configuredApiUrl = import.meta.env.VITE_API_URL;
+const API_URL = /^https?:\/\//.test(configuredApiUrl)
+  ? configuredApiUrl
+  : `http://${configuredApiUrl}`;
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +26,7 @@ function App() {
       const body = new FormData();
       body.append('file', file);
 
-      const res = await fetch(`${API_URL}/api/predict/`, { method: 'POST', body });
+      const res = await fetch(`${API_URL}/api/predict`, { method: 'POST', body });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
@@ -41,7 +44,7 @@ function App() {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen gap-3">
-        <h1 className="text-3xl font-bold text-(--color-text)">Human Sound</h1>
+        <h1 className="text-3xl font-bold text-(--color-text)">Heavenly King Sound</h1>
         <p className="text-(--color-text-muted)">
           Upload a short recording or record. We'll tell you the verdict and the confidence score.
         </p>
