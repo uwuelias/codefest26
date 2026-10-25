@@ -42,7 +42,7 @@ function App() {
       <div className="flex flex-col items-center justify-center h-screen gap-3">
         <h1 className="text-3xl font-bold text-(--color-text)">Human Sound</h1>
         <p className="text-(--color-text-muted)">
-          Upload a short recording or record. We'll convert it into a spectrogram and tell you the
+          Upload a short recording or record. We'll tell you the
           verdict and the confidence score.
         </p>
         <AudioSubmissionForm onSubmit={handleSubmit} loading={loading} error={error} />
