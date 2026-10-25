@@ -1,8 +1,10 @@
-backend/data/
-backend/cache/
-backend/__pycache__/
-backend/.venv/
-backend/env/
-backendvenv/
-backend/weights/
+/data/
+/cache/
+/__pycache__/
+.venv/
+env/
+venv/
+weights/
 .vscode/
+/requirements.txt
+>>>>>>> origin/model
