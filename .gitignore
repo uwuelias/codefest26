@@ -6,3 +6,4 @@ backend/env/
 backendvenv/
 backend/weights/
 .vscode/
+/backend/requirements.txt
