@@ -125,7 +125,7 @@ def main():
 
     # Turns logit to probability using sigmoid function
     loss_fn = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+    optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay = 1e-2)
 
     best_loss = float('inf')
     best_weights = None
