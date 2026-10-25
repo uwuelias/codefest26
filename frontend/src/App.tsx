@@ -2,11 +2,12 @@ import AudioSubmissionForm from './components/AudioSubmissionForm';
 import { useState } from 'react';
 
 interface IdentifyResult {
-  is_ai: boolean;
+  verdict: 'real' | 'fake' | 'inconclusive';
   confidence: number;
+  p_fake: number;
 }
 
-const API_URL = `${import.meta.env.VITE_API_URL}/convert`;
+const API_URL = `${import.meta.env.VITE_API_URL}/api/predict/`;
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,9 @@ function App() {
         {result && (
           <div role="status" className="text-(--color-text)">
             <p className="text-xl font-semibold">
-              {result.is_ai ? 'Likely AI-generated' : 'Likely human'}
+              {result.verdict === 'fake' && 'Likely AI-generated'}
+              {result.verdict === 'real' && 'Likely human'}
+              {result.verdict === 'inconclusive' && 'Not sure'}
             </p>
             <p className="text-(--color-text-muted)">
               {Math.round(result.confidence * 100)}% confident

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import extract, predict
+from routers import predict
 
 app = FastAPI()
 
@@ -15,5 +15,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(extract.router)
 app.include_router(predict.router)
